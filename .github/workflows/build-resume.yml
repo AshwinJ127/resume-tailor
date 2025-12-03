@@ -4,6 +4,10 @@ on:
   issues:
     types: [opened]
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   build-pdf:
     runs-on: ubuntu-latest
@@ -25,9 +29,9 @@ jobs:
           path: resume/base_resume.pdf
 
       - name: Comment on issue with download link
-        uses: peter-evans/create-or-update-comment@v3
+        uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            Your resume PDF has been generated!
+            ✅ Your resume PDF has been generated!
             Download it from the **Artifacts** section.
