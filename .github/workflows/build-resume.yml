@@ -7,18 +7,15 @@ on:
 jobs:
   build-pdf:
     runs-on: ubuntu-latest
+    container: xu-cheng/latex:latest   # Preinstalled LaTeX distro
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install LaTeX
-        run: sudo apt-get update && sudo apt-get install -y texlive-full
-
       - name: Compile base resume
         working-directory: resume
-        run: |
-          pdflatex base_resume.tex
+        run: pdflatex base_resume.tex
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
@@ -27,9 +24,9 @@ jobs:
           path: resume/base_resume.pdf
 
       - name: Comment on issue with download link
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v3
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
             Your resume PDF has been generated!
-            Download artifact: **base-resume-pdf**
+            You can download it from the **Artifacts** section of this workflow run.
