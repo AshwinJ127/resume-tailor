@@ -26,6 +26,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
       - name: Load master prompt
         run: |
           PROMPT=$(sed 's/"/\\"/g' prompt/master_prompt.txt)
