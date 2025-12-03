@@ -58,17 +58,26 @@ jobs:
             "https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent" \
             -o response.json
 
-      - name: Extract LaTeX from response
+      - name: Extract company name and LaTeX from JSON
         run: |
-          # Try primary extraction
-          jq -r '.candidates[0].content.parts[0].text' response.json \
-            > "$OUTFILE" || true
+          RAW=$(jq -r '.candidates[0].content.parts[0].text' response.json)
+          echo "$RAW" > raw_output.json
 
-          # If empty, try fallback location
-          if [ ! -s "$OUTFILE" ]; then
-            jq -r '.candidates[0].content.parts[].text' response.json \
-              > "$OUTFILE"
+          COMPANY=$(jq -r '.company_name' raw_output.json)
+          LATEX=$(jq -r '.latex_resume' raw_output.json)
+
+          if [ "$COMPANY" = "null" ] || [ -z "$COMPANY" ]; then
+            COMPANY="Unknown"
           fi
+
+          DATE=$(date +'%Y-%m-%d')
+          OUTFILE="resumes/Ashwin_Joshi_Resume_${COMPANY}_${DATE}.tex"
+
+          echo "$LATEX" > "$OUTFILE"
+
+          echo "COMPANY=$COMPANY" >> $GITHUB_ENV
+          echo "OUTFILE=$OUTFILE" >> $GITHUB_ENV
+
 
       - name: Compile PDF
         run: |
