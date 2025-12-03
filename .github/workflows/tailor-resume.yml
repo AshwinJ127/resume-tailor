@@ -37,19 +37,12 @@ jobs:
         run: |
           BASE=$(sed 's/"/\\"/g' resume/base_resume.tex)
           JOB="${{ github.event.inputs.job_description }}"
-          COMPANY=$(echo "$JOB" | head -1 | tr -cd '[:alnum:]')
-          DATE=$(date +'%Y-%m-%d')
-          OUTFILE="resumes/Ashwin_Joshi_Resume_${COMPANY}_${DATE}.tex"
-
-          echo "COMPANY=$COMPANY" >> $GITHUB_ENV
-          echo "DATE=$DATE" >> $GITHUB_ENV
-          echo "OUTFILE=$OUTFILE" >> $GITHUB_ENV
 
           cat > payload.json <<EOF
           {
             "contents": [{
               "parts": [{
-                "text": "base_resume:\n$BASE\n\njob_description:\n$JOB\n\ncompany_name:\n$COMPANY\n\n${PROMPT}"
+                "text": "base_resume:\n$BASE\n\njob_description:\n$JOB\n\n${PROMPT}"
               }]
             }]
           }

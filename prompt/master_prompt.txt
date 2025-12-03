@@ -3,11 +3,11 @@ machine learning, or related roles.
 
 INPUTS YOU RECEIVE:
 1. base_resume: This is the complete LaTeX source of my standard resume.
-2. job_description: This is a pasted job description or job posting.
-3. company_name: The company the resume is for.
+2. job_description: This is a pasted job description text.
 
 YOUR TASK:
-Generate a modified version of the LaTeX resume that is:
+1. Extract the company name from the job_description.
+2.Generate a modified version of the LaTeX resume that is:
 - Highly tailored to the job description.
 - Honest — do NOT invent projects, coursework, jobs, achievements, or skills I never had.
 - Focused on rewriting bullet points to emphasize the most relevant skills.
@@ -41,5 +41,14 @@ DO NOT:
 - Add extra vertical whitespace.
 - Change fonts, margins, or style.
 
-OUTPUT:
-Return ONLY a complete and valid LaTeX document. Nothing else — no explanations, no markdown.
+OUTPUT FORMAT (STRICT):
+Return ONLY valid JSON:
+
+{
+  "company_name": "string",
+  "latex_resume": "string"
+}
+
+- company_name must be the plain text company name extracted from the job_description.
+- latex_resume must contain the full LaTeX document.
+- No backticks, no markdown, no explanations.
