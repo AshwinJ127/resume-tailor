@@ -1,0 +1,216 @@
+%-------------------------
+% Resume in Latex
+% Author : Jake Gutierrez
+% Based off of: https://github.com/sb2nov/resume
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+
+
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[rightmargin=3cm]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%----------HEADING----------
+% \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+%   \textbf{\href{http://sourabhbajaj.com/}{\Large Sourabh Bajaj}} & Email : \href{mailto:sourabh@sourabhbajaj.com}{sourabh@sourabhbajaj.com}\\
+%   \href{http://sourabhbajaj.com/}{http://www.sourabhbajaj.com} & Mobile : +1-123-456-7890 \\
+% \end{tabular*}
+
+\begin{center}
+      \textbf{\href{http://ashwinjoshi.me/}{\Huge \scshape Ashwin Joshi}} \\ \vspace{1pt}
+ \href{mailto:ashwinj127@gmail.com}{\underline{ashwinj127@gmail.com}} $|$ 
+    \href{https://linkedin.com/in/ashwinj127} {\underline{linkedin.com/in/ashwinj127}} $|$ \small{847-682-7469}
+\end{center}
+
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {University of California at Los Angeles}{Los Angeles, CA}
+      {Bachelor of Science in Computer Science}{Graduating 2027}
+    \resumeItemListStart
+            \resumeItem{Relevant Coursework: \textbf{Data Structures and Algorithms (Java, Python, C++)}, Computer Organization, Oracle Database Course (SQL), Coursera Artificial Intelligence Course (Machine Learning, Reinforcement Learning, Neural Networks)}
+            \resumeItem{\textbf{Bruin Sports Analytics}, \textbf{Bruin Machine Learning and Analytics}}
+            \resumeItem{Honors: National Merit Scholar Finalist, Illinois State Scholar, ACT: 36}
+          \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    
+      
+% -----------Multiple Positions Heading-----------
+%    \resumeSubSubheading
+%     {Software Engineer I}{Oct 2014 - Sep 2016}
+%     \resumeItemListStart
+%        \resumeItem{Apache Beam}
+%          {Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines}
+%     \resumeItemListEnd
+%    \resumeSubHeadingListEnd
+%-------------------------------------------
+
+\resumeSubheading
+  {CTO \& Software Engineer}{Apr 2025 -- Present}
+  {Flock}{Los Angeles, CA}
+  \resumeItemListStart
+    \resumeItem{Led full-stack development of Flock, a real-time student rideshare application built with \textbf{React, TailwindCSS, SQL, and WebSockets}, designing and implementing key features such as ride posting, ride searching, and live messaging to enable seamless communication between users}
+    \resumeItem{Oversaw deployment of the application to the App Store, ensuring mobile responsiveness, performance optimization, and compliance with Apple’s review and security guidelines}
+  \resumeItemListEnd
+
+
+\resumeSubheading
+  {Research Assistant}{Oct 2025 -- Present}
+  {UCLA BioCybernetics Lab}{Los Angeles, CA}
+  \resumeItemListStart
+    \resumeItem{Collaborated with research leads to develop and refine \textbf{pThyrosim}, a computational engine that simulates and predicts the effects of different thyroid hormone treatments on a patient}
+    \resumeItem{Engineered companion \textbf{iOS application} using \textbf{Swift} and \textbf{SwiftUI}, directly translating feedback from the team into a functional mobile interface}
+  \resumeItemListEnd
+  
+\resumeSubheading
+  {Researcher, Artificial Intelligence - Stock Market}{May 2022 -- Sep 2022}
+  {Duke University}{Remote}
+  \resumeItemListStart
+    \resumeItem{Engineered automated data pipelines to collect and process over 50,000 financial news articles using \textbf{BeautifulSoup}, using sentiment analysis with \textbf{Flair} to extract market-relevant insights}
+    \resumeItem{Developed and evaluated \textbf{logistic regression} model across multiple temporal windows to predict directional stock price movement, achieving up to \textbf{62\% accuracy} and benchmarking performance against baseline models}
+
+  \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+
+%-----------PROJECTS-----------
+\section{Projects}
+  \resumeSubHeadingListStart
+    \resumeProjectHeading
+      {\textbf{AI Cybersecurity Threat Detector} $|$ \emph{Python, LightGBM, FastAPI, React, Kafka}}{Oct 2025 -- Present}
+      \resumeItemListStart
+        \resumeItem{Built AI-driven system to identify malicious network behavior with \textbf{97\% precision} and \textbf{96\% recall}, improving detection reliability across diverse traffic patterns}
+        \resumeItem{Designed real-time detection pipeline capable of processing \textbf{12,000+ events/sec}, enabling continuous monitoring with FastAPI-based alerts and React dashboard for live traffic insights}
+      \resumeItemListEnd
+
+    \resumeProjectHeading
+      {\textbf{Python Code Quality Analyzer CLI} $|$ \emph{Python, AST, Radon, Rich}}{Jun 2025 -- Present}
+    \resumeItemListStart
+        \resumeItem{Built CLI tool to evaluate Python code quality using cyclomatic complexity, maintainability, code smells, and AST parsing via the Radon library, with stylized output using Rich}
+        \resumeItem{Added export features and CI/CD integration, enabling seamless incorporation into developer workflows and automated quality checks}
+    \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+
+
+%
+%-----------PROGRAMMING SKILLS-----------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}]
+  \small{\item{
+    \textbf{Languages}{: Python, Java, JavaScript, TypeScript, C/C++, SQL, HTML/CSS, Swift} \\
+    \textbf{Frameworks \& Libraries}{: React, Next.js, Node.js, Express, Flask, Material-UI, JUnit, FastAPI, TensorFlow, pandas, NumPy, Matplotlib, scikit-learn, PyTorch, Flair, BeautifulSoup} \\
+    \textbf{Developer Tools}{: Git, GitHub, Docker, VS Code, PyCharm, IntelliJ, Xcode, Eclipse} \\
+    \textbf{Databases}{: PostgreSQL, MySQL, MongoDB, SQLite} \\
+    \textbf{Other Technologies}{: REST APIs, GraphQL, CI/CD, Firebase, Netlify, Fly.io, JSON, JWT, WebSockets}
+  }}
+\end{itemize}
+
+
+
+%-------------------------------------------
+\end{document}
