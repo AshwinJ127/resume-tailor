@@ -66,6 +66,9 @@ jobs:
 
       - name: Extract company name and LaTeX from JSON
         run: |
+          # Ensure resumes directory exists
+          mkdir -p resumes
+
           # Extract raw model output
           RAW=$(jq -r '.candidates[0].content.parts[0].text' response.json)
           echo "$RAW" > raw_output.json
@@ -85,8 +88,10 @@ jobs:
           DATE=$(date +'%Y-%m-%d')
           OUTFILE="resumes/Ashwin_Joshi_Resume_${SAFE_COMPANY}_${DATE}.tex"
 
+          # Write LaTeX to file
           echo "$LATEX" > "$OUTFILE"
 
+          # Export variables for later steps
           echo "COMPANY=$COMPANY" >> $GITHUB_ENV
           echo "OUTFILE=$OUTFILE" >> $GITHUB_ENV
 
