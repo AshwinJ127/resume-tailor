@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install LaTeX
         run: sudo apt-get update && sudo apt-get install -y texlive-full
@@ -21,13 +21,13 @@ jobs:
           pdflatex base_resume.tex
 
       - name: Upload PDF artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: base-resume-pdf
           path: resume/base_resume.pdf
 
       - name: Comment on issue with download link
-        uses: peter-evans/create-or-update-comment@v3
+        uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
