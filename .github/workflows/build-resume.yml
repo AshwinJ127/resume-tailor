@@ -7,7 +7,8 @@ on:
 jobs:
   build-pdf:
     runs-on: ubuntu-latest
-    container: xu-cheng/latex:latest   # Preinstalled LaTeX distro
+    container:
+      image: ghcr.io/xu-cheng/texlive-full:latest
 
     steps:
       - name: Checkout repository
@@ -29,4 +30,4 @@ jobs:
           issue-number: ${{ github.event.issue.number }}
           body: |
             Your resume PDF has been generated!
-            You can download it from the **Artifacts** section of this workflow run.
+            Download it from the **Artifacts** section.
