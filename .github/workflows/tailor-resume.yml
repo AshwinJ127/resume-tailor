@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       job_description:
-        description: 'Job description text or link'
+        description: "Job description text or link"
         required: true
         type: string
 
@@ -26,12 +26,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install jq
+        run: |
+          apk update || true
+          apk add jq || true
+
       - name: Load master prompt
         run: |
           PROMPT=$(sed 's/"/\\"/g' prompt/master_prompt.txt)
-          echo "PROMPT<<EOF" >> $GITHUB_ENV
-          echo "$PROMPT" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          {
+            echo "PROMPT<<EOF"
+            echo "$PROMPT"
+            echo "EOF"
+          } >> "$GITHUB_ENV"
 
       - name: Prepare payload
         run: |
@@ -48,7 +55,6 @@ jobs:
           }
           EOF
 
-
       - name: Call Gemini API
         run: |
           curl -s -X POST \
@@ -60,24 +66,29 @@ jobs:
 
       - name: Extract company name and LaTeX from JSON
         run: |
+          # Extract raw model output
           RAW=$(jq -r '.candidates[0].content.parts[0].text' response.json)
           echo "$RAW" > raw_output.json
 
+          # Parse fields
           COMPANY=$(jq -r '.company_name' raw_output.json)
           LATEX=$(jq -r '.latex_resume' raw_output.json)
 
+          # Ensure company name exists
           if [ "$COMPANY" = "null" ] || [ -z "$COMPANY" ]; then
             COMPANY="Unknown"
           fi
 
+          # Sanitize company name for filenames
+          SAFE_COMPANY=$(echo "$COMPANY" | tr -cd '[:alnum:]_-')
+
           DATE=$(date +'%Y-%m-%d')
-          OUTFILE="resumes/Ashwin_Joshi_Resume_${COMPANY}_${DATE}.tex"
+          OUTFILE="resumes/Ashwin_Joshi_Resume_${SAFE_COMPANY}_${DATE}.tex"
 
           echo "$LATEX" > "$OUTFILE"
 
           echo "COMPANY=$COMPANY" >> $GITHUB_ENV
           echo "OUTFILE=$OUTFILE" >> $GITHUB_ENV
-
 
       - name: Compile PDF
         run: |
