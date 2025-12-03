@@ -1,0 +1,90 @@
+name: Tailor Resume
+
+on:
+  workflow_dispatch:
+    inputs:
+      job_description:
+        description: 'Job description text or link'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  tailor:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/xu-cheng/texlive-full:latest
+
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      MODEL: "gemini-2.0-flash"
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Load master prompt
+        run: |
+          PROMPT=$(sed 's/"/\\"/g' prompt/master_prompt.txt)
+          echo "PROMPT<<EOF" >> $GITHUB_ENV
+          echo "$PROMPT" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Prepare payload
+        run: |
+          BASE=$(sed 's/"/\\"/g' resume/base_resume.tex)
+          JOB="${{ github.event.inputs.job_description }}"
+          COMPANY=$(echo "$JOB" | head -1 | tr -cd '[:alnum:]')
+          DATE=$(date +'%Y-%m-%d')
+          OUTFILE="resumes/Ashwin_Joshi_Resume_${COMPANY}_${DATE}.tex"
+
+          echo "COMPANY=$COMPANY" >> $GITHUB_ENV
+          echo "DATE=$DATE" >> $GITHUB_ENV
+          echo "OUTFILE=$OUTFILE" >> $GITHUB_ENV
+
+          cat > payload.json <<EOF
+          {
+            "contents": [{
+              "parts": [{
+                "text": "base_resume:\n$BASE\n\njob_description:\n$JOB\n\ncompany_name:\n$COMPANY\n\n${PROMPT}"
+              }]
+            }]
+          }
+          EOF
+
+
+      - name: Call Gemini API
+        run: |
+          curl -s -X POST \
+            -H "Content-Type: application/json" \
+            -H "x-goog-api-key: $GEMINI_API_KEY" \
+            -d @payload.json \
+            "https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent" \
+            -o response.json
+
+      - name: Extract LaTeX from response
+        run: |
+          # Try primary extraction
+          jq -r '.candidates[0].content.parts[0].text' response.json \
+            > "$OUTFILE" || true
+
+          # If empty, try fallback location
+          if [ ! -s "$OUTFILE" ]; then
+            jq -r '.candidates[0].content.parts[].text' response.json \
+              > "$OUTFILE"
+          fi
+
+      - name: Compile PDF
+        run: |
+          pdflatex -output-directory=resumes "$OUTFILE"
+
+      - name: Commit tailored resume
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add resumes/
+          git commit -m "Add tailored resume for $COMPANY ($DATE)" || echo "No changes to commit"
+          git push
